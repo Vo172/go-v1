@@ -1,0 +1,21 @@
+Name: apiproduct-api
+Host: 0.0.0.0
+Port: 8899
+
+CacheRedis:
+  - Host: 127.0.0.1:6379
+    Pass:
+    Type: node
+Oracle:
+  DriverName: oracle
+  DataSource: oracle://IMDB:123456@localhost:1521/xe
+
+Auth:
+  AccessSecret: xiaoming
+  AccessExpire: 123456
+
+Keycloak:
+  ClientId: "my-go-service"
+  ClientSecret: "czeGd8yZwC7ImuKBnKcDQ0x7rkWaAeKM"
+  Realm: "master"
+  BasePath: "http://localhost:8002"

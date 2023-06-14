@@ -1,0 +1,46 @@
+syntax = "v1"
+
+info(
+    desc: "Customer"
+    author: "VoPT"
+    email: "phamvo@mbbank.com.vn"
+)
+
+type (
+    AddCustomerReq struct {
+        Email      string `json:"email"`
+        CustomerName    string `json:"customerName"`
+    }
+    AddCustomerResp struct {
+        Code        string `json:"code"`
+        Message     string `json:"message"`
+    }
+
+    CustomerReq {
+        CustomerCode    string `json:"customerId"`
+        CustomerName    string `json:"customerName"`
+        Page            int32 `json:"page"`
+        Size            int32 `json:"size"`
+    }
+
+    CustomerReply {
+        CustomerId      int64  `json:"customerId"`
+        CustomerName    string `json:"customerName"`
+        Email           string `json:"email"`
+        createdDate     string `json:"createdDate"`
+    }
+
+)
+
+@server(
+    group: product
+    prefix: /api/product
+)
+
+service apiproduct-api {
+    @handler CustomerAdd
+    post /add (AddCustomerReq) returns (AddCustomerResp)
+
+    @handler CustomerList
+    post /list (CustomerReq) returns (CustomerReply)
+}

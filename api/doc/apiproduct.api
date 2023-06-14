@@ -1,0 +1,8 @@
+import "login/login.api"
+import "product/product.api"
+
+info(
+	desc: "PRODUCT API"
+	author: "VoPT"
+	email: "phamvo@mbbank.com.vn"
+)
