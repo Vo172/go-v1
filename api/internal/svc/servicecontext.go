@@ -1,31 +1,26 @@
 package svc
 
 import (
-	"apiproduct/api/internal/config"
-	"apiproduct/api/internal/middleware"
-	"apiproduct/rpc/model/customersmodel"
-	"fmt"
-	"github.com/jmoiron/sqlx"
+	"crmcore-customer-go/api/internal/config"
+	"crmcore-customer-go/api/internal/middleware"
+	"crmcore-customer-go/rpc/category/category"
 	_ "github.com/sijms/go-ora/v2"
 	"github.com/zeromicro/go-zero/rest"
+	"github.com/zeromicro/go-zero/zrpc"
 )
 
 type ServiceContext struct {
-	Config         config.Config
-	CustomersModel customersmodel.CustomersModel
-	Keycloak       *middleware.Keycloak
-	Authen         rest.Middleware
+	Config   config.Config
+	Keycloak *middleware.Keycloak
+	Authen   rest.Middleware
+	Category category.Category
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
-	db, err := sqlx.Open(c.Oracle.DriverName, c.Oracle.DataSource)
-	if err != nil {
-		fmt.Println("Lỗi khi kết nối cơ sở dữ liệu:", err)
-	}
 	return &ServiceContext{
-		Config:         c,
-		CustomersModel: customersmodel.NewCustomersModel(*db),
-		Keycloak:       middleware.NewKeycloak(c.Keycloak.BasePath, c.Keycloak.ClientId, c.Keycloak.ClientSecret, c.Keycloak.Realm),
-		Authen:         middleware.NewMiddleware(middleware.NewKeycloak(c.Keycloak.BasePath, c.Keycloak.ClientId, c.Keycloak.ClientSecret, c.Keycloak.Realm)).VerifyToken,
+		Config:   c,
+		Keycloak: middleware.NewKeycloak(c.Keycloak.BasePath, c.Keycloak.ClientId, c.Keycloak.ClientSecret, c.Keycloak.Realm),
+		Authen:   middleware.NewMiddleware(middleware.NewKeycloak(c.Keycloak.BasePath, c.Keycloak.ClientId, c.Keycloak.ClientSecret, c.Keycloak.Realm)).VerifyToken,
+		Category: category.NewCategory(zrpc.MustNewClient(c.CommonRpc)),
 	}
 }

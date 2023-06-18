@@ -1,0 +1,44 @@
+syntax = "v1"
+
+info(
+  desc: "Common Category"
+  author: "VoPT"
+  email: "phamvo@mbbank.com.vn"
+)
+
+type (
+  DetailCommonCategoryReq struct {
+    Id                  string  `json:"id"`
+  }
+  DetailCommonCategoryResp struct {
+    Id                  string  `json:"id"`
+    Code                string  `json:"code"`
+    Name                string  `json:"name"`
+  }
+
+  ListCommonCategoryReq {
+    Code                string `json:"code,optional"`
+    Name                string `json:"name,optional"`
+    Page                int32 `json:"page,default=0"`
+    Size                int32 `json:"size,default=10"`
+  }
+  ListCommonCategoryResp {
+    Id                  string  `json:"id"`
+    Code                string  `json:"code"`
+    Name                string  `json:"name"`
+  }
+)
+
+@server(
+  group: commoncategory
+  middleware: Authen
+  prefix: /api/commoncategory
+)
+
+service apicategory-api {
+  @handler CommonDetail
+  post /detail (DetailCommonCategoryReq) returns (DetailCommonCategoryResp)
+
+  @handler CommonList
+  post /list (ListCommonCategoryReq) returns (ListCommonCategoryResp)
+}

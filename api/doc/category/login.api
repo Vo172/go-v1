@@ -1,0 +1,36 @@
+syntax = "v1"
+
+info(
+  desc: "Login"
+  author: "VoPT"
+  email: "phamvo@mbbank.com.vn"
+)
+
+type (
+  LoginReq {
+    Username string `json:"username"`
+    Password string `json:"password"`
+  }
+
+  LoginReply {
+    AccessToken       string `json:"access_token"`
+    AccessExpire      int64 `json:"expires_in"`
+    RefreshAfter      int64 `json:"refresh_expires_in"`
+    RefreshToken      string `json:"refresh_token"`
+    NotBeforePolicy   int64 `json:"not-before-policy"`
+    TokenType         string `json:"token_type"`
+    SessionState      string `json:"session_state"`
+    Scope             string `json:"scope"`
+  }
+)
+
+@server(
+  group: login
+  prefix: /api/auth
+)
+
+service apicategory-api {
+  @handler login
+  post /login (LoginReq) returns (LoginReply)
+}
+

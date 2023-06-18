@@ -1,0 +1,109 @@
+syntax = "v1"
+
+info(
+  desc: "Common"
+  author: "VoPT"
+  email: "phamvo@mbbank.com.vn"
+)
+
+type (
+  AddCommonReq struct {
+    Code                string  `json:"code"`
+    Name                string  `json:"name"`
+    Description         string  `json:"description,optional"`
+    OrderNum            int16   `json:"orderNum,optional"`
+    Value               string  `json:"value,optional"`
+    CommonCategoryCode  string  `json:"commonCategoryCode"`
+    IsDefault           bool    `json:"isDefault,default=false"`
+  }
+  AddCommonResp struct {
+    Code string `json:"code"`
+    Message string `json:"message"`
+  }
+
+  UpdateCommonReq struct {
+    Id                  string  `json:"id"`
+    Code                string  `json:"code"`
+    Name                string  `json:"name"`
+    Description         string  `json:"description,optional"`
+    OrderNum            int32    `json:"orderNum,optional"`
+    Value               string  `json:"value,optional"`
+    CommonCategoryCode  string  `json:"commonCategoryCode"`
+    IsDefault           bool    `json:"isDefault,default=false"`
+  }
+  UpdateCommonResp struct {
+    Code string `json:"code"`
+    Message string `json:"message"`
+  }
+
+  DeleteCommonReq struct {
+    Id                  string  `json:"id"`
+  }
+  DeleteCommonResp struct {
+    Code string `json:"code"`
+    Message string `json:"message"`
+  }
+
+  DetailCommonReq struct {
+    Id                  string  `json:"id"`
+  }
+  DetailCommonResp struct {
+    Id                  string  `json:"id"`
+    Code                string  `json:"code"`
+    Name                string  `json:"name"`
+    Description         string  `json:"description,optional"`
+    OrderNum            int32    `json:"orderNum,optional"`
+    Value               string  `json:"value,optional"`
+    CommonCategoryCode  string  `json:"commonCategoryCode"`
+    IsDefault           bool    `json:"isDefault,optional"`
+  }
+
+  ListCommonReq {
+    Code                string `json:"code,optional"`
+    Name                string `json:"name,optional"`
+    CommonCategoryCode  string `json:"commonCategoryCode,optional"`
+    Page                int32 `json:"page,default=0"`
+    Size                int32 `json:"size,default=10"`
+  }
+
+  ListCommonResp {
+    Id                  string  `json:"id"`
+    Code                string  `json:"code"`
+    Name                string  `json:"name"`
+    Description         string  `json:"description,optional"`
+    OrderNum            int32    `json:"orderNum,optional"`
+    Value               string  `json:"value,optional"`
+    CommonCategoryCode  string  `json:"commonCategoryCode"`
+    IsDefault           bool    `json:"isDefault,default=false"`
+  }
+  PageCommonResp{
+    Content             []*ListCommonResp   `json:"content"`
+    TotalElement        int32               `json:"totalElement,default=0"`
+    TotalPages          int32               `json:"totalPages,default=0"`
+    Size                int32               `json:"size,default=0"`
+    Number              int32               `json:"number,default=10"`
+  }
+)
+
+@server(
+  group: common
+  middleware: Authen
+  prefix: /api/common
+)
+
+service apicategory-api {
+  @handler CommonAdd
+  post /add (AddCommonReq) returns (AddCommonResp)
+
+  @handler CommonUpdate
+  post /update (UpdateCommonReq) returns (UpdateCommonReq)
+
+  @handler CommonDelete
+  post /delete (DeleteCommonReq) returns (DeleteCommonResp)
+
+  @handler CommonDetail
+  post /detail (DetailCommonReq) returns (DeleteCommonResp)
+
+  @handler CommonList
+  post /list (ListCommonReq) returns (PageCommonResp)
+}

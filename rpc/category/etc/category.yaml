@@ -1,0 +1,10 @@
+Name: category.rpc
+ListenOn: 0.0.0.0:8087
+Etcd:
+  Hosts:
+  - 127.0.0.1:2379
+  Key: category.rpc
+
+Oracle:
+  DriverName: oracle
+  DataSource: oracle://IMDB:123456@localhost:1521/xe

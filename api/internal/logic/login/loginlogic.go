@@ -1,11 +1,11 @@
 package login
 
 import (
-	"apiproduct/api/internal/svc"
-	"apiproduct/api/internal/types"
 	"context"
-	"fmt"
 	"net/http"
+
+	"crmcore-customer-go/api/internal/svc"
+	"crmcore-customer-go/api/internal/types"
 
 	"github.com/golang-jwt/jwt/v4"
 	"github.com/zeromicro/go-zero/core/logx"
@@ -45,18 +45,19 @@ func (l *LoginLogic) Login(w http.ResponseWriter, req *types.LoginReq) (resp *ty
 		req.Username,
 		req.Password)
 
-	fmt.Println("Token Keycloak : " + jwt.AccessToken)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusForbidden)
 		return
 	}
 
 	return &types.LoginReply{
-		Id:           0,
-		Name:         req.Username,
-		Gender:       "",
-		AccessToken:  jwt.AccessToken,
-		AccessExpire: int64(jwt.ExpiresIn),
-		RefreshAfter: int64(jwt.RefreshExpiresIn),
+		AccessToken:     jwt.AccessToken,
+		AccessExpire:    int64(jwt.ExpiresIn),
+		RefreshAfter:    int64(jwt.RefreshExpiresIn),
+		RefreshToken:    jwt.RefreshToken,
+		NotBeforePolicy: int64(jwt.NotBeforePolicy),
+		TokenType:       jwt.TokenType,
+		SessionState:    jwt.SessionState,
+		Scope:           jwt.Scope,
 	}, nil
 }

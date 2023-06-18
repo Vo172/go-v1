@@ -4,9 +4,10 @@ package handler
 import (
 	"net/http"
 
-	login "apiproduct/api/internal/handler/login"
-	product "apiproduct/api/internal/handler/product"
-	"apiproduct/api/internal/svc"
+	common "crmcore-customer-go/api/internal/handler/common"
+	commoncategory "crmcore-customer-go/api/internal/handler/commoncategory"
+	login "crmcore-customer-go/api/internal/handler/login"
+	"crmcore-customer-go/api/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
 )
@@ -22,6 +23,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		},
 		rest.WithPrefix("/api/auth"),
 	)
+
 	server.AddRoutes(
 		rest.WithMiddlewares(
 			[]rest.Middleware{serverCtx.Authen},
@@ -29,15 +31,49 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				{
 					Method:  http.MethodPost,
 					Path:    "/add",
-					Handler: product.CustomerAddHandler(serverCtx),
+					Handler: common.CommonAddHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/update",
+					Handler: common.CommonUpdateHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/delete",
+					Handler: common.CommonDeleteHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/detail",
+					Handler: common.CommonDetailHandler(serverCtx),
 				},
 				{
 					Method:  http.MethodPost,
 					Path:    "/list",
-					Handler: product.CustomerListHandler(serverCtx),
+					Handler: common.CommonListHandler(serverCtx),
 				},
 			}...,
 		),
-		rest.WithPrefix("/api/product"),
+		rest.WithPrefix("/api/common"),
+	)
+
+	server.AddRoutes(
+		rest.WithMiddlewares(
+			[]rest.Middleware{serverCtx.Authen},
+			[]rest.Route{
+				{
+					Method:  http.MethodPost,
+					Path:    "/detail",
+					Handler: commoncategory.CommonDetailHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/list",
+					Handler: commoncategory.CommonListHandler(serverCtx),
+				},
+			}...,
+		),
+		rest.WithPrefix("/api/commoncategory"),
 	)
 }

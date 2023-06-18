@@ -1,0 +1,86 @@
+syntax = "proto3";
+
+package categoryclient;
+
+option go_package = "./categoryclient";
+
+message AddCommonReq{
+  string       Code = 1;
+  string       Name = 2;
+  string       Description = 3;
+  int32        OrderNum = 4;
+  string       Value = 5;
+  string       CommonCategoryCode = 6;
+  bool         IsDefault = 7;
+}
+
+message AddCommonResp {
+  string pong = 1;
+}
+
+message UpdateCommonReq{
+  string       Id = 1;
+  string       Code = 2;
+  string       Name = 3;
+  string       Description = 4;
+  int32        OrderNum = 5;
+  string       Value = 6;
+  string       CommonCategoryCode = 7;
+  bool         IsDefault = 8;
+}
+
+message UpdateCommonResp {
+  string pong = 1;
+}
+
+message DeleteCommonReq {
+  string Id = 1;
+}
+
+message DeleteCommonResp {
+  string pong = 1;
+}
+
+message DetailCommonReq {
+  string Id = 1;
+}
+
+message DetailCommonResp {
+  string pong = 1;
+}
+
+
+message ListCommonReq {
+  string Code = 1;
+  string Name = 2;
+  string CommonCategoryCode = 3;
+  int32 Page = 4;
+  int32 Size = 5;
+}
+
+message ListCommonResp{
+  string       Id = 1;
+  string       Code = 2;
+  string       Name = 3;
+  string       Description = 4;
+  int32        OrderNum = 5;
+  string       Value = 6;
+  string       CommonCategoryCode = 7;
+  bool         IsDefault = 8;
+}
+
+message PageCommonResp {
+  repeated ListCommonResp Content = 1;
+  int32 TotalElement = 2;
+  int32 TotalPages = 3;
+  int32 Size = 4;
+  int32 Number = 5;
+}
+
+service Category {
+  rpc CommonAdd(AddCommonReq) returns(AddCommonResp);
+  rpc CommonUpdate(UpdateCommonReq) returns(UpdateCommonReq);
+  rpc CommonDelete(DeleteCommonReq) returns(DeleteCommonResp);
+  rpc CommonDetail(DetailCommonReq) returns(DeleteCommonResp);
+  rpc CommonList(ListCommonReq) returns(PageCommonResp);
+}

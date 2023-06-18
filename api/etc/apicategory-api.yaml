@@ -1,0 +1,23 @@
+Name: apicategory-api
+Host: 0.0.0.0
+Port: 8888
+
+CacheRedis:
+  - Host: 127.0.0.1:6379
+    Pass:
+    Type: node
+Oracle:
+  DriverName: oracle
+  DataSource: oracle://IMDB:123456@localhost:1521/xe
+
+Keycloak:
+  ClientId: "my-go-service"
+  ClientSecret: "czeGd8yZwC7ImuKBnKcDQ0x7rkWaAeKM"
+  Realm: "master"
+  BasePath: "http://localhost:8002"
+
+CommonRpc:
+  Etcd:
+    Hosts:
+      - localhost:2379
+    Key: category.rpc

@@ -3,6 +3,7 @@ package config
 import (
 	"github.com/zeromicro/go-zero/core/stores/cache"
 	"github.com/zeromicro/go-zero/rest"
+	"github.com/zeromicro/go-zero/zrpc"
 )
 
 type Config struct {
@@ -13,11 +14,6 @@ type Config struct {
 		DataSource string
 	}
 
-	Auth struct {
-		AccessSecret string
-		AccessExpire int64
-	}
-
 	Keycloak struct {
 		ClientId     string // clientId specified in Keycloak
 		ClientSecret string // client secret specified in Keycloak
@@ -26,4 +22,6 @@ type Config struct {
 	}
 
 	CacheRedis cache.CacheConf
+
+	CommonRpc zrpc.RpcClientConf
 }

@@ -1,0 +1,23 @@
+Name: apicategory-api
+Host: 0.0.0.0
+Port: 8888
+
+CacheRedis:
+  - Host: 127.0.0.1:6379
+    Pass:
+    Type: node
+Oracle:
+  DriverName: oracle
+  DataSource: oracle://crm_category:crmdev123@10.1.16.40:1521/crmdev
+
+Keycloak:
+  ClientId: "sale-service"
+  ClientSecret: "71d61ffd-2015-43b3-bbd1-dec49f333699"
+  Realm: "internal"
+  BasePath: "https://keycloak-internal-uat.mbbank.com.vn/auth"
+
+CommonRpc:
+  Etcd:
+    Hosts:
+      - localhost:2379
+    Key: category.rpc

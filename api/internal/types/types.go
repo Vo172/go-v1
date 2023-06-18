@@ -7,34 +7,117 @@ type LoginReq struct {
 }
 
 type LoginReply struct {
-	Id           int64  `json:"id"`
-	Name         string `json:"name"`
-	Gender       string `json:"gender"`
-	AccessToken  string `json:"accessToken"`
-	AccessExpire int64  `json:"accessExpire"`
-	RefreshAfter int64  `json:"refreshAfter"`
+	AccessToken     string `json:"access_token"`
+	AccessExpire    int64  `json:"expires_in"`
+	RefreshAfter    int64  `json:"refresh_expires_in"`
+	RefreshToken    string `json:"refresh_token"`
+	NotBeforePolicy int64  `json:"not-before-policy"`
+	TokenType       string `json:"token_type"`
+	SessionState    string `json:"session_state"`
+	Scope           string `json:"scope"`
 }
 
-type AddCustomerReq struct {
-	Email        string `json:"email"`
-	CustomerName string `json:"customerName"`
+type AddCommonReq struct {
+	Code               string `json:"code"`
+	Name               string `json:"name"`
+	Description        string `json:"description,optional"`
+	OrderNum           int16  `json:"orderNum,optional"`
+	Value              string `json:"value,optional"`
+	CommonCategoryCode string `json:"commonCategoryCode"`
+	IsDefault          bool   `json:"isDefault,default=false"`
 }
 
-type AddCustomerResp struct {
+type AddCommonResp struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 }
 
-type CustomerReq struct {
-	CustomerCode string `json:"customerId"`
-	CustomerName string `json:"customerName"`
-	Page         int32  `json:"page"`
-	Size         int32  `json:"size"`
+type UpdateCommonReq struct {
+	Id                 string `json:"id"`
+	Code               string `json:"code"`
+	Name               string `json:"name"`
+	Description        string `json:"description,optional"`
+	OrderNum           int32  `json:"orderNum,optional"`
+	Value              string `json:"value,optional"`
+	CommonCategoryCode string `json:"commonCategoryCode"`
+	IsDefault          bool   `json:"isDefault,default=false"`
 }
 
-type CustomerReply struct {
-	CustomerId   int64  `json:"customerId"`
-	CustomerName string `json:"customerName"`
-	Email        string `json:"email"`
-	CreatedDate  string `json:"createdDate"`
+type UpdateCommonResp struct {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+
+type DeleteCommonReq struct {
+	Id string `json:"id"`
+}
+
+type DeleteCommonResp struct {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+
+type DetailCommonReq struct {
+	Id string `json:"id"`
+}
+
+type DetailCommonResp struct {
+	Id                 string `json:"id"`
+	Code               string `json:"code"`
+	Name               string `json:"name"`
+	Description        string `json:"description,optional"`
+	OrderNum           int32  `json:"orderNum,optional"`
+	Value              string `json:"value,optional"`
+	CommonCategoryCode string `json:"commonCategoryCode"`
+	IsDefault          bool   `json:"isDefault,optional"`
+}
+
+type ListCommonReq struct {
+	Code               string `json:"code,optional"`
+	Name               string `json:"name,optional"`
+	CommonCategoryCode string `json:"commonCategoryCode,optional"`
+	Page               int32  `json:"page,default=0"`
+	Size               int32  `json:"size,default=10"`
+}
+
+type ListCommonResp struct {
+	Id                 string `json:"id"`
+	Code               string `json:"code"`
+	Name               string `json:"name"`
+	Description        string `json:"description,optional"`
+	OrderNum           int32  `json:"orderNum,optional"`
+	Value              string `json:"value,optional"`
+	CommonCategoryCode string `json:"commonCategoryCode"`
+	IsDefault          bool   `json:"isDefault,default=false"`
+}
+
+type PageCommonResp struct {
+	Content      []*ListCommonResp `json:"content"`
+	TotalElement int32             `json:"totalElement,default=0"`
+	TotalPages   int32             `json:"totalPages,default=0"`
+	Size         int32             `json:"size,default=0"`
+	Number       int32             `json:"number,default=10"`
+}
+
+type DetailCommonCategoryReq struct {
+	Id string `json:"id"`
+}
+
+type DetailCommonCategoryResp struct {
+	Id   string `json:"id"`
+	Code string `json:"code"`
+	Name string `json:"name"`
+}
+
+type ListCommonCategoryReq struct {
+	Code string `json:"code,optional"`
+	Name string `json:"name,optional"`
+	Page int32  `json:"page,default=0"`
+	Size int32  `json:"size,default=10"`
+}
+
+type ListCommonCategoryResp struct {
+	Id   string `json:"id"`
+	Code string `json:"code"`
+	Name string `json:"name"`
 }
